@@ -13,7 +13,10 @@ class RedisClient {
   }
 
   isAlive() {
-    return this.client.connected;
+    if (this.client.connected) {
+      return true;
+    }
+    return false;
   }
 
   // Get a value from Redis by key
