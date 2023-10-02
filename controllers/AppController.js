@@ -3,7 +3,7 @@ const DBClient = require('../utils/db');
 
 const AppController = {
   // Endpoint to check the status of Redis and the database
-  getStatus: async (req, res) => {
+  getStatus: (req, res) => {
     const redisAlive = RedisClient.isAlive();
     const dbAlive = DBClient.isAlive();
 
