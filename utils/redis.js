@@ -22,21 +22,27 @@ class RedisClient {
   // Get a value from Redis by key
   async get(key) {
     const getAsync = promisify(this.client.get).bind(this.client);
-    return await getAsync(key);
+    const value = await getAsync(key);
+    return value;
   }
 
   // Set a key-value pair in Redis with an optional expiration (in seconds)
   async set(key, value, duration) {
     if (duration) {
-      return await promisify(this.client.set).bind(this.client)(key, value, 'EX', duration);
-    } else {
-      return await promisify(this.client.set).bind(this.client)(key, value);
+      const setPromisify = promisify(this.client.set).bind(this.client);
+      const response = await setPromisify(key, value, 'EX', duration);
+      return response;
     }
+    const setPromisifyWithoutDuration = promisify(this.client.set).bind(this.client);
+    const response = await setPromisifyWithoutDuration(key, value);
+    return response;
   }
 
   // Delete a key from Redis
   async del(key) {
-    return await promisify(this.client.del).bind(this.client)(key);
+    const delPromisify = promisify(this.client.del).bind(this.client);
+    const response = await delPromisify(key);
+    return response;
   }
 }
 
