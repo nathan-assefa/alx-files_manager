@@ -17,7 +17,6 @@ class RedisClient {
     }
     return false;
   }
-
   // get value for given key from redis server
   async get(key) {
     const redisGet = promisify(this.client.get).bind(this.client);
